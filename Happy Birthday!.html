@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy Birthday!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,800;9..144,900&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fff3f7; --ink:#2b1033; --muted:#6d5577; --pink:#ff3d81; --sun:#ffc233; --teal:#14a99a; --card:#ffffff; --line:#f2cfdc;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--bg:#1c0e24; --ink:#fdeaf2; --muted:#c3a6cf; --card:#2a1635; --line:#472659;}
+}
+:root[data-theme="dark"]{--bg:#1c0e24; --ink:#fdeaf2; --muted:#c3a6cf; --card:#2a1635; --line:#472659;}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.6;overflow-x:hidden}
+.display{font-family:Fraunces,Georgia,"Times New Roman",serif;font-weight:900;line-height:.9;letter-spacing:-.02em}
+main{max-width:880px;margin:0 auto;padding:0 20px}
+.hero{padding:56px 0 36px;text-align:center}
+.date{display:inline-flex;align-items:flex-end;gap:14px;margin:0}
+.date .num{font-size:clamp(9rem,36vw,17rem);color:var(--pink);text-shadow:6px 6px 0 var(--sun)}
+.date .mon{font-size:clamp(2.4rem,9vw,4.4rem);padding-bottom:.9rem;text-align:left}
+h1{font-size:clamp(2rem,7vw,3.4rem);margin:18px 0 8px}
+.sub{color:var(--muted);font-size:1.1rem;margin:0 auto 26px;max-width:34ch}
+button{font:inherit;font-weight:700;border:0;border-radius:999px;padding:14px 28px;background:var(--pink);color:#fff;cursor:pointer;box-shadow:0 5px 0 #b81f58;transition:transform .1s,box-shadow .1s}
+button:active{transform:translateY(4px);box-shadow:0 1px 0 #b81f58}
+button:focus-visible{outline:3px solid var(--sun);outline-offset:3px}
+.count{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:34px 0 8px}
+.count div{min-width:76px;padding:14px 10px;background:var(--card);border:2px solid var(--line);border-radius:16px;text-align:center}
+.count b{display:block;font-family:Fraunces,Georgia,serif;font-size:2.1rem;font-weight:900;line-height:1}
+.count span{font-size:.85rem;color:var(--muted)}
+#cdnote{color:var(--muted);margin:10px 0 0;min-height:1.6em}
+.loves{margin:56px 0;border-top:3px solid var(--ink)}
+.loves h2{font-size:clamp(1.8rem,5vw,2.6rem);margin:28px 0 8px}
+.loves ul{list-style:none;margin:0;padding:0}
+.loves li{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:baseline;padding:20px 0;border-bottom:1px solid var(--line)}
+.loves li strong{font-family:Fraunces,Georgia,serif;font-size:1.6rem;font-weight:800;color:var(--teal)}
+.loves li p{margin:0;max-width:52ch}
+.note{background:var(--sun);color:#2b1033;border-radius:24px;padding:36px clamp(22px,5vw,48px);margin:0 0 56px;transform:rotate(-1deg)}
+.note h2{font-size:2rem;margin:0 0 14px}
+.note p{margin:0 0 12px;font-size:1.1rem;max-width:56ch}
+.sign{font-family:Fraunces,Georgia,serif;font-weight:800;font-size:1.4rem}
+footer{text-align:center;color:var(--muted);padding:0 0 48px}
+#c{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:10}
+@media (max-width:480px){.loves li{grid-template-columns:1fr;gap:4px}}
+</style>
+</head>
+<body>
+<canvas id="c" aria-hidden="true"></canvas>
+<main>
+  <section class="hero">
+    <p class="date display"><span class="num">7</span><span class="mon">August</span></p>
+    <h1 class="display" id="title">Happy Birthday!</h1>
+    <p class="sub">Today the world celebrates one of its best people. That's you.</p>
+    <button id="party" type="button">Make a wish</button>
+    <div class="count" role="timer" aria-live="off">
+      <div><b id="d">0</b><span>days</span></div>
+      <div><b id="h">0</b><span>hours</span></div>
+      <div><b id="m">0</b><span>minutes</span></div>
+      <div><b id="s">0</b><span>seconds</span></div>
+    </div>
+    <p id="cdnote"></p>
+  </section>
+
+  <section class="loves">
+    <h2 class="display">Things we love about you</h2>
+    <ul>
+      <li><strong>Your laugh</strong><p>It fills the room and makes every ordinary day feel like a good one.</p></li>
+      <li><strong>Your kindness</strong><p>You show up for people, and you remember the small things that matter.</p></li>
+      <li><strong>Your spark</strong><p>You turn plain plans into adventures and bring the fun wherever you go.</p></li>
+    </ul>
+  </section>
+
+  <section class="note">
+    <h2 class="display">A note for you</h2>
+    <p>Thank you for being the kind of friend who makes life brighter just by being in it. I hope this year brings you everything you've been wishing for: big joy, small surprises and plenty of cake.</p>
+    <p>Keep shining. I'm so lucky to know you.</p>
+    <p class="sign">With love, your friend</p>
+  </section>
+</main>
+<footer>Made with love for a very special 7 August</footer>
+
+<script>
+var NAME = ""; // add her name here, e.g. "Priya"
+if (NAME) document.getElementById("title").textContent = "Happy Birthday, " + NAME + "!";
+
+function nextBirthday(now){
+  var y = now.getFullYear();
+  if (now >= new Date(y, 7, 8)) y++;
+  return new Date(y, 7, 7);
+}
+function tick(){
+  var now = new Date(), note = document.getElementById("cdnote");
+  var isToday = now.getMonth() === 7 && now.getDate() === 7;
+  var t = nextBirthday(now), diff = isToday ? 0 : Math.max(0, t - now);
+  var s = Math.floor(diff / 1000);
+  document.getElementById("d").textContent = Math.floor(s / 86400);
+  document.getElementById("h").textContent = Math.floor(s % 86400 / 3600);
+  document.getElementById("m").textContent = Math.floor(s % 3600 / 60);
+  document.getElementById("s").textContent = s % 60;
+  note.textContent = isToday ? "It's today! Enjoy every minute." : "until the next birthday, 7 August " + t.getFullYear();
+}
+tick(); setInterval(tick, 1000);
+
+var cv = document.getElementById("c"), cx = cv.getContext("2d"), P = [], raf = null;
+function size(){ cv.width = innerWidth; cv.height = innerHeight; }
+addEventListener("resize", size); size();
+function burst(){
+  var cols = ["#ff3d81","#ffc233","#14a99a","#7c5cff","#ff8fb8"];
+  for (var i = 0; i < 150; i++) P.push({
+    x: Math.random() * cv.width, y: -20 - Math.random() * cv.height * .4,
+    vx: (Math.random() - .5) * 3, vy: 2 + Math.random() * 4,
+    s: 6 + Math.random() * 8, r: Math.random() * 6, vr: (Math.random() - .5) * .3, c: cols[i % cols.length]
+  });
+  if (!raf) loop();
+}
+function loop(){
+  cx.clearRect(0, 0, cv.width, cv.height);
+  P = P.filter(function(p){ return p.y < cv.height + 30; });
+  P.forEach(function(p){
+    p.x += p.vx; p.y += p.vy; p.r += p.vr;
+    cx.save(); cx.translate(p.x, p.y); cx.rotate(p.r);
+    cx.fillStyle = p.c; cx.fillRect(-p.s / 2, -p.s / 4, p.s, p.s / 2); cx.restore();
+  });
+  raf = P.length ? requestAnimationFrame(loop) : null;
+}
+document.getElementById("party").addEventListener("click", burst);
+if (!matchMedia("(prefers-reduced-motion: reduce)").matches) setTimeout(burst, 400);
+</script>
+</body>
+</html>
